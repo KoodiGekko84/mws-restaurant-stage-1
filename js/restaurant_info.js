@@ -2,6 +2,20 @@ let restaurant;
 var map;
 
 /**
+ * Register Service Worker:
+ */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', {scope: '/'})
+    .then(function(reg) {
+      // registration worked
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch(function(error) {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+}
+
+/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
@@ -117,19 +131,29 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
-  name.innerHTML = review.name;
-  li.appendChild(name);
 
+  const reviewHeader = document.createElement('div');
+  name.classList.add("review-header");
+  
+  const name = document.createElement('p');
+  name.classList.add("name");
+  name.innerHTML = review.name;
+  reviewHeader.appendChild(name);
+  
   const date = document.createElement('p');
+  date.classList.add("date");
   date.innerHTML = review.date;
-  li.appendChild(date);
+  reviewHeader.appendChild(date);
+  
+  li.appendChild(reviewHeader);
 
   const rating = document.createElement('p');
+  rating.classList.add("rating");
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
-
+  
   const comments = document.createElement('p');
+  comments.classList.add("comments");
   comments.innerHTML = review.comments;
   li.appendChild(comments);
 

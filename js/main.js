@@ -4,12 +4,9 @@ let restaurants,
 var map
 var markers = []
 
-
 /**
  * Register Service Worker:
  */
-console.log('Testing!!');
-
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js', {scope: '/'})
     .then(function(reg) {
