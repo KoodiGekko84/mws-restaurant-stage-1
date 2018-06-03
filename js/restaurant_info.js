@@ -133,7 +133,7 @@ createReviewHTML = (review) => {
   const li = document.createElement('li');
 
   const reviewHeader = document.createElement('div');
-  name.classList.add("review-header");
+  reviewHeader.classList.add("review-header");
   
   const name = document.createElement('p');
   name.classList.add("name");
