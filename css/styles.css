@@ -323,7 +323,7 @@ nav h1 a {
 }
 #reviews-list li {
   background-color: #fff;
-  border: 2px solid #f3f3f3;
+  /*border: 2px solid #f3f3f3;*/
   /*display: block;*/
   display: flex;
   flex-wrap: wrap;

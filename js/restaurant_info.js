@@ -1,5 +1,5 @@
 let restaurant;
-var map;
+var newMap;
 
 /**
  * Register Service Worker:
@@ -16,8 +16,38 @@ if ('serviceWorker' in navigator) {
 }
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize map as soon as the page is loaded.
  */
+document.addEventListener('DOMContentLoaded', (event) => {  
+  initMap();
+});
+ /**
+ * Initialize leaflet map
+ */
+initMap = () => {
+  fetchRestaurantFromURL((error, restaurant) => {
+    if (error) { // Got an error!
+      console.error(error);
+    } else {      
+      self.newMap = L.map('map', {
+        center: [restaurant.latlng.lat, restaurant.latlng.lng],
+        zoom: 16,
+        scrollWheelZoom: false
+      });
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
+        mapboxToken: 'pk.eyJ1IjoiYXJ0b3BhcnRvODQiLCJhIjoiY2psOXRpemZyMGlvaTN3bzB5eHprOGE3eiJ9.PHrUfbUeXCbZeF0GhfTKVw',
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox.streets'    
+      }).addTo(newMap);
+      fillBreadcrumb();
+      DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+    }
+  });
+}  
+/*
 window.initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
@@ -33,11 +63,13 @@ window.initMap = () => {
     }
   });
 }
+*/
 
 /**
  * Get current restaurant from page URL.
  */
 fetchRestaurantFromURL = (callback) => {
+  console.log('test!');
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant)
     return;
@@ -69,9 +101,31 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  // Images:
+  let imageSrc = DBHelper.imageUrlForRestaurant(restaurant);
+  console.log('imageSrc');
+  console.log(imageSrc);
+  let imageAltText = DBHelper.imageAltTextForRestaurant(restaurant);
+  if (imageSrc) {
+    console.log('hep!');
+    imageSrc = imageSrc.split('.', 1)[0]
+  } else {
+    imageSrc = '/img/not_found'
+  }
+    
+  // Responsive images:
+  const pictureLarge  = document.getElementById('restaurant-picture-large');
+  const pictureMedium  = document.getElementById('restaurant-picture-medium');
+  pictureLarge.srcset = `${imageSrc}-750_large_1x.jpg 1x, ${imageSrc}-1500_large_2x.jpg 2x`;
+  pictureMedium.srcset = `${imageSrc}-400_medium_1x.jpg 1x, ${imageSrc}-800_medium_2x.jpg 2x`;
+  
+  // Fallback image:
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = `${imageSrc}-200_small_1x.jpg`;
+  image.srcset = `${imageSrc}-400_small_2x.jpg 2x`
+
+  // Alt text
+  image.alt = imageAltText;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
