@@ -102,27 +102,21 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   // Images:
-  let imageSrc = DBHelper.imageUrlForRestaurant(restaurant);
-  console.log('imageSrc');
-  console.log(imageSrc);
+  let imageSrc = DBHelper.imageUrlForRestaurant(restaurant).split('.', 1)[0];
+  
+  // Image alt text:
   let imageAltText = DBHelper.imageAltTextForRestaurant(restaurant);
-  if (imageSrc) {
-    console.log('hep!');
-    imageSrc = imageSrc.split('.', 1)[0]
-  } else {
-    imageSrc = '/img/not_found'
-  }
     
   // Responsive images:
   const pictureLarge  = document.getElementById('restaurant-picture-large');
   const pictureMedium  = document.getElementById('restaurant-picture-medium');
-  pictureLarge.srcset = `${imageSrc}-750_large_1x.jpg 1x, ${imageSrc}-1500_large_2x.jpg 2x`;
+  pictureLarge.srcset = `${imageSrc}-800_large_1x.jpg 1x`;
   pictureMedium.srcset = `${imageSrc}-400_medium_1x.jpg 1x, ${imageSrc}-800_medium_2x.jpg 2x`;
   
   // Fallback image:
   const image = document.getElementById('restaurant-img');
-  image.src = `${imageSrc}-200_small_1x.jpg`;
-  image.srcset = `${imageSrc}-400_small_2x.jpg 2x`
+  image.src = `${imageSrc}-300_small_1x.jpg`;
+  image.srcset = `${imageSrc}-300_small_1x.jpg 1x, ${imageSrc}-600_small_2x.jpg 2x`;
 
   // Alt text
   image.alt = imageAltText;
