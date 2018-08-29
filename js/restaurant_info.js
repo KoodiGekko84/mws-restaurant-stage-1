@@ -5,12 +5,11 @@ var newMap;
  * Register Service Worker:
  */
 if ('serviceWorker' in navigator) {
+  console.log('Registering the service worker...')
   navigator.serviceWorker.register('/sw.js', {scope: '/'})
-    .then(function(reg) {
-      // registration worked
+    .then(reg => {
       console.log('Registration succeeded. Scope is ' + reg.scope);
-    }).catch(function(error) {
-      // registration failed
+    }).catch(error => {
       console.log('Registration failed with ' + error);
     });
 }
@@ -69,7 +68,6 @@ window.initMap = () => {
  * Get current restaurant from page URL.
  */
 fetchRestaurantFromURL = (callback) => {
-  console.log('test!');
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant)
     return;
