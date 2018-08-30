@@ -13,17 +13,19 @@
 </head>
 
 <body>
-  <header>
+  <a class="skip-link" tabindex="0" href="#filters">Skip to filters</a> 
+  <a class="skip-link" tabindex="0" href="#restaurants-list">Skip to restaurants list</a> 
+  <header role="banner">
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
-  <main id="maincontent">
+  <main role="main" id="maincontent">
     <section id="map-container">
-      <div role="application" id="map"></div>
+      <div role="application" aria-label="A map with restaurants" id="map"></div>
     </section>
-    <section>
+    <section id="filters">
       <div class="filter-options">
         <h2>Filter Results</h2>
         <select aria-label="Select neighborhoods" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
@@ -42,7 +44,7 @@
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqs7uWHJGkkAF4bN7G30kzEAQ_wAfPZHY&libraries=places&callback=initMap"></script> -->
 
-  <footer id="footer">
+  <footer role="contentinfo" id="footer">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
 

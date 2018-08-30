@@ -15,14 +15,15 @@
 </head>
 
 <body class="inside">
+  <a class="skip-link" tabindex="0" href="#restaurant-container">Skip to the restaurant</a> 
   <!-- Beginning header -->
-  <header>
+  <header role="banner">
     <!-- Beginning nav -->
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" >
+    <ul role="navigation" id="breadcrumb" >
       <li><a href="/">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
@@ -31,14 +32,14 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-  <main id="maincontent">
+  <main role="main" id="maincontent">
     <!-- Beginning map -->
     <section id="map-container">
-      <div role="application" id="map"></div>
+      <div role="application" aria-label="A map with restaurants" id="map"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container">
+    <section id="restaurant-container" aria-label="Restaurant info">
       <h1 id="restaurant-name"></h1>
       <div id="restaurant-img-container">
         <picture class="restaurant-img" id="restaurant-picture">
@@ -55,7 +56,7 @@
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
-    <section id="reviews-container">
+    <section id="reviews-container" aria-label="Restaurant reviews">
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
@@ -63,7 +64,7 @@
   <!-- End main -->
 
   <!-- Beginning footer -->
-  <footer id="footer">
+  <footer role="contentinfo" id="footer">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
   <!-- End footer -->

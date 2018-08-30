@@ -88,6 +88,16 @@ main {
 }
 
 /* ====================== Navigation ====================== */
+.skip-link {
+  position: fixed;
+  top: -200px;
+  left: 0px;
+}
+
+.skip-link:focus {
+  top: 0px;
+}
+
 nav {
   width: 100%;
   background-color: #111111;
@@ -116,6 +126,7 @@ nav h1 a {
 /* Display list items side by side */
 #breadcrumb li {
   display: inline;
+  font-size: 0.75rem;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
@@ -196,6 +207,15 @@ div.leaflet-control-attribution a {
   text-align: left;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+#restaurants-list li img {
+  border-radius: 8px;
 }
 
 #restaurants-list .restaurant-img {
@@ -218,18 +238,27 @@ div.leaflet-control-attribution a {
 #restaurants-list p {
   margin: 0;
   font-size: 0.75rem;
+  width: 100%;
+  display: block;
 }
+
+#restaurants-list p.restaurant-address {
+  margin-bottom: 10px;
+}
+
 #restaurants-list li a {
   background-color: rgb(98, 31, 255);
   border-bottom: 3px solid #eee;
   color: #fff;
-  display: inline-block;
   font-size: 0.75rem;
-  margin: 15px 0 0;
-  padding: 8px 30px 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  padding: 12px 30px 12px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  border-radius: 8px;
 }
 
 #restaurants-list li a:hover {
@@ -424,6 +453,10 @@ div.leaflet-control-attribution a {
   }
   .filter-options select {
     width: calc(100% - 20px);
+    padding: 10px;
+  }
+  #breadcrumb li {
+    font-size: 1rem;
   }
 }
 
