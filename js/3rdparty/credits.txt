@@ -1,0 +1,4 @@
+File: idb.js
+Jake Archibald
+https://github.com/jakearchibald/idb
+Downloaded: 30 August 2018

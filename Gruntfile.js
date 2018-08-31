@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           src: ['*.{gif,jpg,png}'],
-          cwd: 'img_src/',
+          cwd: 'img_originals/',
           dest: 'img/'
         }]
       }
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
     /* Clear out the images directory if it exists */
     clean: {
       dev: {
-        src: ['img'],
+        src: ['img/*','!img/icons'],
       },
     },
 

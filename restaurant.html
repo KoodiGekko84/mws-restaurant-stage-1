@@ -5,10 +5,10 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7b0cdd"/>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <!-- Normalize.css for better cross-browser consistency -->
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-  <!-- Main CSS file -->
   <link rel="stylesheet" href="css/styles.css" type="text/css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
   <title>Restaurant Info</title>
@@ -16,36 +16,27 @@
 
 <body class="inside">
   <a class="skip-link" tabindex="0" href="#restaurant-container">Skip to the restaurant</a> 
-  <!-- Beginning header -->
+
   <header role="banner">
-    <!-- Beginning nav -->
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
-    <!-- Beginning breadcrumb -->
     <ul role="navigation" id="breadcrumb" >
       <li><a href="/">Home</a></li>
     </ul>
-    <!-- End breadcrumb -->
-    <!-- End nav -->
   </header>
-  <!-- End header -->
 
-  <!-- Beginning main -->
   <main role="main" id="maincontent">
-    <!-- Beginning map -->
     <section id="map-container">
       <div role="application" aria-label="A map with restaurants" id="map"></div>
     </section>
-    <!-- End map -->
-    <!-- Beginning restaurant -->
     <section id="restaurant-container" aria-label="Restaurant info">
-      <h1 id="restaurant-name"></h1>
+      <h2 id="restaurant-name"></h1>
       <div id="restaurant-img-container">
         <picture class="restaurant-img" id="restaurant-picture">
           <source id="restaurant-picture-large" media="(min-width: 1000px)">
           <source id="restaurant-picture-medium" media="(min-width: 400px)">
-          <img class="restaurant-img" id="restaurant-img">
+          <img class="restaurant-img" id="restaurant-img" alt="A placeholder for alt text" title="A placeholder for title text">
         </picture>
       </div>
       <div id="restaurant-info-container">
@@ -54,30 +45,17 @@
         <table id="restaurant-hours"></table>
       </div>
     </section>
-    <!-- end restaurant -->
-    <!-- Beginning reviews -->
     <section id="reviews-container" aria-label="Restaurant reviews">
       <ul id="reviews-list"></ul>
     </section>
-    <!-- End reviews -->
   </main>
-  <!-- End main -->
 
-  <!-- Beginning footer -->
   <footer role="contentinfo" id="footer">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
-  <!-- End footer -->
   <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-  <!-- Beginning scripts -->
-  <!-- Database helpers -->
   <script type="text/javascript" src="js/dbhelper.js"></script>
-  <!-- Main javascript file -->
   <script type="text/javascript" src="js/restaurant_info.js"></script>
-  <!-- Google Maps -->
-  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqs7uWHJGkkAF4bN7G30kzEAQ_wAfPZHY&libraries=places&callback=initMap"></script>-->
-  <!-- End scripts -->
-
 </body>
 
 </html>
