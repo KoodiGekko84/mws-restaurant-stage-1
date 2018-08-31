@@ -110,6 +110,7 @@ nav h1 {
 nav h1 a {
   color: #ffffff;
   font-size: 0.875rem;
+  padding: 15px;
   font-weight: 200;
   letter-spacing: 10px;
   text-transform: uppercase;
@@ -281,7 +282,6 @@ div.leaflet-control-attribution a {
   height: 400px;
   position: relative;
   right: 0;
-  /*top: 80px;*/
   width: 100%;
 }
 .inside #map {
@@ -290,7 +290,6 @@ div.leaflet-control-attribution a {
   width: 100%;
 }
 .inside #footer {
-  /*bottom: 0;*/
   position: relative;
   width: 100%;
 }
@@ -307,7 +306,8 @@ div.leaflet-control-attribution a {
   width: 100%;
 }
 #restaurant-img {
-	width: 100%;
+  width: 100%;
+  border-radius: 5px;
 }
 #restaurant-address {
   font-size: 0.625rem;
@@ -327,7 +327,6 @@ div.leaflet-control-attribution a {
 }
 #restaurant-container {
   border-bottom: 1px solid #d9d9d9;
-  /* border-top: 1px solid #fff; */
   padding: 20px 15px 20px;
   width: 100%;
   display: flex;
@@ -358,8 +357,6 @@ div.leaflet-control-attribution a {
 }
 #reviews-list li {
   background-color: #fff;
-  /*border: 2px solid #f3f3f3;*/
-  /*display: block;*/
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -370,6 +367,15 @@ div.leaflet-control-attribution a {
   position: relative;
   width: 100%;
   border-radius: 20px 0px 20px 0px;
+  min-height: 375px;
+}
+
+#reviews-list li.pending {
+  border: 2px solid red;
+}
+
+#reviews-list li p.pending {
+  color: red;
 }
 
 #reviews-list li p {
@@ -444,6 +450,125 @@ div.leaflet-control-attribution a {
   vertical-align: top;
 }
 
+
+/* ==================== Reviews Form ====================*/
+
+#review-form-section {
+  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #fff;
+  padding: 20px 15px 20px;
+  width: 100%;
+}
+
+#review-form-container {
+  margin: 0;
+  padding: 15px;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 5px 10px 8px #888888
+}
+
+#review-form-container.hidden {
+  display: none;
+}
+
+#review-form-container h2 {
+  color: #aa5e00;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -1px;
+  padding-bottom: 1pt;
+}
+
+#review-form input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#review-form textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#review-form input[type=button] {
+  font-size: 1rem;
+  background-color: rgb(98, 31, 255);
+  color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  padding: 12px 30px 12px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 8px;
+  display: block;
+  float: right;
+  box-shadow: 3px 6px 5px #888888
+}
+
+#review-form input[type=button]:hover {
+  background-color: rgb(44, 2, 143);
+}
+
+#pending-review-info {
+  display: none;
+}
+
+#pending-review-info.visible {
+  display: block;
+}
+
+#pending-review-info h3 {
+  color: purple;
+  font-size: 1rem;
+}
+
+/* ================= Online Status Pane ===================*/
+#online-status-container {
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  margin: 2px;
+  border: solid 1px rgb(73, 71, 71);
+  box-shadow: 2px 4px 2px #888888;
+  background-color: red;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#online-status-container.offline {
+  display: block;
+}
+
+#online-status-container h2 {
+  font-size: 0.6rem;
+  color: black;
+}
+
+#online-status-container p {
+  font-size: 0.3rem;
+  color: black;
+  display: none;
+}
+
+/* ================= Responsive design ==================*/
+
 @media only screen and (min-width: 350px) {
   #restaurant-name {
     font-size: 1.4rem;
@@ -457,6 +582,16 @@ div.leaflet-control-attribution a {
   }
   #breadcrumb li {
     font-size: 1rem;
+  }
+  #online-status-container h2 {
+    font-size: 0.6rem;
+    color: black;
+  }
+  
+  #online-status-container p {
+    font-size: 0.3rem;
+    color: black;
+    display: none;
   }
 }
 
@@ -487,6 +622,16 @@ div.leaflet-control-attribution a {
   .filter-options select {
     width: calc(50% - 24px);
   }
+  #online-status-container h2 {
+    font-size: 0.8rem;
+    color: black;
+  }
+  
+  #online-status-container p {
+    font-size: 0.7rem;
+    color: black;
+    display: inline;
+  }
 }
 
 @media only screen and (min-width: 800px) {
@@ -502,5 +647,14 @@ div.leaflet-control-attribution a {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+  }
+  #online-status-container h2 {
+    font-size: 1.1rem;
+    color: black;
+  }
+  
+  #online-status-container p {
+    font-size: 0.9rem;
+    color: black;
   }
 }

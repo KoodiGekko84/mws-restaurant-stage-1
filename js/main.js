@@ -7,18 +7,56 @@ var newMap;
 var markers = []
 
 /**
+ * A Set of functions that take care of switching in between the online mode and offlien mode.
+ */
+function toggleOnlineMode() {
+  const onlineStatusContainer = document.getElementById('online-status-container');
+  onlineStatusContainer.classList.remove('offline');
+  onlineStatusContainer.removeAttribute('aria-label');
+  onlineStatusContainer.removeAttribute('role');
+
+  // Let's process the pending reviews:
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({ type: 'UPLOAD_PENDING_REVIEWS'});
+  }
+}
+
+function toggleOfflineMode() {
+  const onlineStatusContainer = document.getElementById('online-status-container');
+  onlineStatusContainer.classList.add('offline');
+  onlineStatusContainer.setAttribute('aria-label', 'The browser is disconnected.')
+  onlineStatusContainer.role = 'alert';
+
+  // Let's make sure that the offline mode doesn't stay if went online unnoticed.
+  var refreshIntervalId = setInterval(() => {
+    if (navigator.onLine) {
+      toggleOnlineMode();
+      clearInterval(refreshIntervalId);
+    }
+  }, 10000);
+}
+
+/**
  * Register Service Worker:
  */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', {scope: '/'})
-    .then(function(reg) {
-      // registration worked
+  navigator.serviceWorker
+    .register('/sw.js', {scope: '/'})
+    .then(reg => {
       console.log('SW registration succeeded. Scope is ' + reg.scope);
-    }).catch(function(error) {
-      // registration failed
+      window.addEventListener('online', toggleOnlineMode);    
+      window.addEventListener('offline', toggleOfflineMode);
+      if (window.navigator.onLine) {
+        toggleOnlineMode();
+      } else {
+        toggleOfflineMode();
+      }
+    })
+    .catch(error => {
       console.log('SW registration failed with ' + error);
-    });
+  });
 }
+
 
 navigator.serviceWorker.addEventListener('message', event => {
   if (event.data.type === 'NEW_RESTAURANTS') {

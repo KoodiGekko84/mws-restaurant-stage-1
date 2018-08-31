@@ -9,14 +9,14 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants/`;
+    return `http://localhost:${port}`;
   }
 
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    fetch(DBHelper.DATABASE_URL)
+    fetch(DBHelper.DATABASE_URL + '/restaurants/')
       .then(response => {
         if (response.status !== 200) throw Error('Request failed. Returned status of:', response.status);
         return response.json();
@@ -34,7 +34,7 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    fetch(DBHelper.DATABASE_URL + id)
+    fetch(DBHelper.DATABASE_URL + '/restaurants/' + id)
       .then(response => {
         if (response.status !== 200) throw Error('Request failed. Returned status of:', response.status);
         return response.json();
@@ -49,6 +49,25 @@ class DBHelper {
         return callback(err, null);
       });
   }
+  
+  /**
+   * Fetch reviews by restaurant ID.
+   */
+  static fetchReviewsById(id, callback) {
+    if (!id) return callback (new Error('No Restaurant Id'), null);
+    fetch(DBHelper.DATABASE_URL + '/reviews/?restaurant_id=' + id)
+      .then(response => {
+        if (response.status !== 200) throw Error('Request failed. Returned status of:', response.status);
+        return response.json();
+      })
+      .then(reviews => {
+        return callback(null, reviews);
+      })
+      .catch(err => {
+        console.log('Fetching the reviews didn\'t work:', err);
+        return callback(err, null);
+      });
+  }
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
@@ -57,11 +76,11 @@ class DBHelper {
     // Fetch all restaurants  with proper error handling
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
-        callback(error, null);
+        return callback(error, null);
       } else {
         // Filter restaurants to have only given cuisine type
         const results = restaurants.filter(r => r.cuisine_type == cuisine);
-        callback(null, results);
+        return callback(null, results);
       }
     });
   }
@@ -73,11 +92,11 @@ class DBHelper {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
-        callback(error, null);
+        return callback(error, null);
       } else {
         // Filter restaurants to have only given neighborhood
         const results = restaurants.filter(r => r.neighborhood == neighborhood);
-        callback(null, results);
+        return callback(null, results);
       }
     });
   }
@@ -90,7 +109,7 @@ class DBHelper {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
-        callback(error, null);
+        return callback(error, null);
       } else {
         // Get all unique neighborhoods from all restaurants
         const neighborhoods = restaurants.map(v => v.neighborhood);
@@ -104,7 +123,7 @@ class DBHelper {
         if (cuisine != 'all') restaurants = restaurants.filter(r => r.cuisine_type == cuisine);
         if (neighborhood != 'all') restaurants = restaurants.filter(r => r.neighborhood == neighborhood);
 
-        callback(null, { restaurants: restaurants, cuisines: uniqueCuisines, neighborhoods: uniqueNeighborhoods });
+        return callback(null, { restaurants: restaurants, cuisines: uniqueCuisines, neighborhoods: uniqueNeighborhoods });
       }
     });
   }
@@ -144,4 +163,20 @@ class DBHelper {
       marker.addTo(newMap);
     return marker;
   }
+
+  static saveRestaurantReview(reviewData, callback) {
+    fetch(DBHelper.DATABASE_URL + '/reviews/', {
+      method: 'POST',
+      body: JSON.stringify(reviewData),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(res => res.json()
+      .then(response => {
+        console.log('Success:', JSON.stringify(response));
+        return callback(null, response);
+      })).catch(error => {
+        // console.error('Error:', erro);
+        return callback(error, null);
+      });
+  }
+
 }
